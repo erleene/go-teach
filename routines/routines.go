@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
+	"sync"
 )
 
 type Url struct {
@@ -11,37 +13,42 @@ type Url struct {
 	Body string
 }
 
-func printURLBody(url *UrlLink) error {
+func printURLBody(url *Url, wg *sync.WaitGroup) error {
 
-	body, err := http.Get(url.Link)
+	response, err := http.Get(url.URL)
 	if err != nil {
 		return err
 	}
-	fmt.Println(url.Body)
-	//ioutil
-	return nil
-}
 
-type UrlLink struct {
-	Link *Url
+	output, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return err
+	}
+	url.Body = string(output)
+	println(string(output))
+	fmt.Printf("%v", *response)
+
+	wg.Done()
+	return nil
 }
 
 func main() {
 
-	url1 := &Url{Okay: true, URL: "https://preview.beamery.com", Body: ""}
-	url2 := &Url{Okay: true, URL: "https://canary.beamery.com", Body: ""}
-	url3 := &Url{Okay: true, URL: "https://beamery.com", Body: ""}
-
-	//create array struct
-	urls := []UrlLink{{Link: url1}, {Link: url2}, {Link: url3}}
+	//create array of urls
+	urls := []*Url{&Url{Okay: true, URL: "https://preview.beamery.com", Body: ""},
+		&Url{Okay: true, URL: "https://canary.beamery.com", Body: ""},
+		&Url{Okay: true, URL: "https://beamery.com", Body: ""}} //pointer array
 	//urls := &UrlLink{{Link: *url1}, {Link: *url2}, {Link: *url3}}
 
 	//urls := []string{"https://preview.beamery.com", "https://canary.beamery.com", "https://beamery.com"}
 
-	printURLBody(urls)
-	//printURLBody(url1)
-	//printURLBody(url1)Url(urls)
+	var wg sync.WaitGroup
 
-	//wait for completion?
+	for x := 0; x < len(urls); x++ {
+		currentURL := urls[0]
+		wg.Add(1)
+		go printURLBody(currentURL, &wg) //pass waitgroup to go routine
+	}
 
+	wg.Wait()
 }
