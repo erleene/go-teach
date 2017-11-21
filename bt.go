@@ -12,10 +12,9 @@ import (
 //null pointer represents a binary tree with no elements = empty tree
 
 type Node struct {
-	Left  *Node
-	Right *Node
-	Value int
-	Data  string
+	Left, Right *Node
+	Value       int
+	Data        string
 }
 
 func (t *Node) Insert(val int, data string) *Node {

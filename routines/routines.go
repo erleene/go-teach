@@ -24,13 +24,17 @@ func printURLBody(url *Url, wg *sync.WaitGroup) error {
 	if err != nil {
 		return err
 	}
+
 	url.Body = string(output)
+
 	println(string(output))
-	fmt.Printf("%v", *response)
+	fmt.Printf(" our response is: %v", *response)
 
 	wg.Done() //calls when it's done
 	return nil
 }
+
+var wg sync.WaitGroup
 
 func main() {
 
@@ -39,8 +43,6 @@ func main() {
 		&Url{Okay: true, URL: "https://preview.beamery.com", Body: ""},
 		&Url{Okay: true, URL: "https://canary.beamery.com", Body: ""},
 		&Url{Okay: true, URL: "https://beamery.com", Body: ""}}
-
-	var wg sync.WaitGroup
 
 	for x := 0; x < len(urls); x++ {
 		currentURL := urls[0]
