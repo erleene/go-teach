@@ -5,7 +5,7 @@ import "fmt"
 //create a new interface with type Test with a method Tester()
 type Test interface {
 	Tester()
-}
+}``
 
 //create a float64 Type
 type MyFloat float64
