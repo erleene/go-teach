@@ -40,9 +40,9 @@ func main() {
 
 	//create array of urls: urls is now an array pointer
 	urls := []*Url{
-		&Url{Okay: true, URL: "https://preview.beamery.com", Body: ""},
-		&Url{Okay: true, URL: "https://canary.beamery.com", Body: ""},
-		&Url{Okay: true, URL: "https://beamery.com", Body: ""}}
+		&Url{Okay: true, URL: "https://www.google.com", Body: ""},
+		&Url{Okay: true, URL: "https://www.bbc.co.uk", Body: ""},
+		&Url{Okay: true, URL: "https://www.itv.co.uk", Body: ""}}
 
 	for x := 0; x < len(urls); x++ {
 		currentURL := urls[0]
