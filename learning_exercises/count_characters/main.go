@@ -7,10 +7,15 @@ import (
 
 func main() {
 	text := "asSaSA ddd dsjkdsjs dk"
-	fmt.Println(len([]rune(text)))
+	text_rune := []rune(text)
+	copy(text_rune[4:4+3], []rune("abc"))
+
+	fmt.Println(len([]byte(text)))
+	fmt.Println(utf8.RuneCount([]byte(text)))
 	//print the byte
-	rune_text := []rune(text)
-	for _, v := range rune_text {
-		fmt.Println(utf8.RuneLen(v))
-	}
+	// rune_text := []rune(text)
+	// for _, v := range rune_text {
+	//
+	// 	fmt.Println(v)
+
 }
