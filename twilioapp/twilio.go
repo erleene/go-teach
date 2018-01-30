@@ -24,8 +24,8 @@ func main() {
 }
 
 func sendSMSHandler(w http.ResponseWriter, r *http.Request) {
-	accountSid := "ACc0160b769e60c25c7d68d8b9cd54ae9f"
-	authToken := "8904837cb3aac85835f9eba0314618e1"
+	accountSid := "xxxx"
+	authToken := "xxxx"
 
 	client := twirest.NewClient(accountSid, authToken)
 

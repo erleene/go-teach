@@ -6,7 +6,7 @@ automatic_scaling:
 
 # [START env_variables]
 env_variables:
-  TWILIO_ACCOUNT_SID: ACc0160b769e60c25c7d68d8b9cd54ae9f
-  TWILIO_AUTH_TOKEN: 8904837cb3aac85835f9eba0314618e1
-  TWILIO_NUMBER: +441536609533
+  TWILIO_ACCOUNT_SID: Axxxx
+  TWILIO_AUTH_TOKEN: xxx
+  TWILIO_NUMBER: xxx
 # [END env_variables]
