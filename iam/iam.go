@@ -7,6 +7,7 @@ import (
 )
 
 type IamContext struct {
+<<<<<<< HEAD
 	ctx   context.Context
 	admin *admin.IamClient
 }
@@ -71,3 +72,47 @@ type IamContext struct {
 // 	}
 // 	return nil
 // }
+=======
+	ctx     context.Context
+	admin   *admin.IamClient
+	project string
+}
+
+//create a new IamClient
+func NewIamContext(project string) (*IamContext, error) {
+	ctx := context.Background()
+	c, err := admin.NewIamClient(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return &IamContext{
+		ctx:     ctx,
+		admin:   c,
+		project: "projects/" + project,
+	}, nil
+}
+
+func (i *IamContext) Close() error {
+	return i.admin.Close()
+}
+
+func (i *IamContext) ListAllServiceAccounts() error {
+	req := &adminpb.ListServiceAccountsRequest{
+		Name: i.project,
+	}
+	it := i.admin.ListServiceAccounts(i.ctx, req)
+
+	for {
+		resp, err := it.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			return err
+		}
+		log.Println("Display Name:", resp.GetDisplayName())
+		log.Println("Email:", resp.GetEmail())
+	}
+	return nil
+}
+>>>>>>> more problems
