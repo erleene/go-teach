@@ -1,0 +1,12 @@
+runtime: go
+env: flex
+
+automatic_scaling:
+  min_num_instances: 1
+
+# [START env_variables]
+env_variables:
+  TWILIO_ACCOUNT_SID: ACc0160b769e60c25c7d68d8b9cd54ae9f
+  TWILIO_AUTH_TOKEN: 8904837cb3aac85835f9eba0314618e1
+  TWILIO_NUMBER: +441536609533
+# [END env_variables]
