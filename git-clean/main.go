@@ -38,32 +38,28 @@ func main() {
 				/**Given that I have a github repo in a directory
 				then I can list all the local branches of the repo. **/
 
+				/**only list branches that are not checked out**/
+
 				// We instance a new repository targeting the given path (the .git folder)
 				repo, err := git.PlainOpen(dir)
 				if err != nil {
 					return err
 				}
 
+				//retrieve all references to branches
 				localBr, _ := repo.Branches()
 
 				/**from localBr, check which one is a checkedout branch **/
 
-				/**localBr are references to all branches;
-				for each reference print their name and check if it's a branch**/
-
+				//for each localBr reference print their name and check if it's a branch
 				localBr.ForEach(func(ref *plumbing.Reference) error {
-
-					// ref is a Reference struct
-
-					//get Name
-					refName := ref.Name() //returns a Reference Name string
+					refName := ref.Name() //returns a ReferenceName string type
 					fmt.Println("Reference name is:", refName)
 
 					//check if this is a branch
 					if refName.IsBranch() {
 						fmt.Println("It's a branch")
 					}
-
 					//check if refName. is currently a checked out branch
 
 					return nil
