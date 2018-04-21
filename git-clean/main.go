@@ -2,8 +2,6 @@ package main
 
 //var branch string
 import (
-	"fmt"
-
 	rep "github.com/go-teach/git-clean/repository"
 )
 
@@ -18,6 +16,9 @@ func main() {
 
 	dir := rep.CheckRepository()
 	branches := rep.GetLocalBranches(dir)
-	fmt.Printf("Branches %v", branches)
+
+	//fmt.Printf("Branches %v", branches)
+
+	rep.DeleteLocalBranches(branches)
 
 }

@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 
 	git "gopkg.in/src-d/go-git.v4"
+	"gopkg.in/src-d/go-git.v4/plumbing"
+	"gopkg.in/src-d/go-git.v4/plumbing/storer"
 )
 
 //this package will contain the building blocks of the git-clean program
@@ -26,11 +28,9 @@ func CheckRepository() string {
 
 	//if dir contains .git folder then return true
 	err = filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
-		if info.IsDir() {
-			if info.Name() == ".git" {
-				fmt.Println("This is a github repository")
-			}
-			return nil
+
+		if info.IsDir() && info.Name() == ".git" {
+			fmt.Println("This is a github repository")
 		}
 		return nil
 	})
@@ -45,41 +45,35 @@ func GetLocalBranches(dir string) interface{} {
 
 	localBr, _ := repo.Branches()
 
-	// localBr.ForEach(func(ref *plumbing.Reference) error {
-	// 	refName := ref.Name()
-	// 	fmt.Println("Reference name:", refName)
-	//
-	// 	//check if this is a branch
-	// 	if refName.IsBranch() {
-	// 		fmt.Println("It's a branch")
-	// 	}
-	// 	//if a branch, check if it's not master
-	// 	if refName != "refs/heads/master" {
-	// 		fmt.Println("This is not the master branch")
-	// 		//DELETE
-	// 	}
-	// 	return nil
-	// })
-	// return err
 	return localBr
 }
 
-func DeleteBranch() {
-	// localBr.ForEach(func(ref *plumbing.Reference) error {
-	// 	refName := ref.Name()
-	// 	fmt.Println("Reference name:", refName)
-	//
-	// 	//check if this is a branch
-	// 	if refName.IsBranch() {
-	// 		fmt.Println("It's a branch")
-	// 	}
-	// 	//if a branch, check if it's not master
-	// 	if refName != "refs/heads/master" {
-	// 		fmt.Println("This is not the master branch")
-	// 		//DELETE
-	// 	}
-	// 	return nil
-	// })
-	// return err
+func DeleteLocalBranches(branches interface{}) {
 
+	localBr := branches.(storer.ReferenceIter)
+	//convert branches to storer.ReferenceIter object
+	//localBr := storer.NewReferenceSliceIter(branches)
+	//
+
+	localBr.ForEach(func(ref *plumbing.Reference) error {
+		refName := ref.Name()
+		//
+		switch refName.IsBranch() {
+		case refName != "refs/heads/master":
+			fmt.Println("This is not the master branch")
+		default:
+			fmt.Println("This is the master branch")
+		}
+		return nil
+	})
+	//
+	// 	// 	//if a branch, check if it's not master
+	// 	// 	if refName != "refs/heads/master" {
+	// 	// 		fmt.Println("This is not the master branch")
+	// 	// 		//DELETE
+	// 	// 	}
+	// 	// 	return nil
+	// 	// })
+	// 	// return err
+	//
 }
