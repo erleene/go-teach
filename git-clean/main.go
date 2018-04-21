@@ -35,9 +35,6 @@ func main() {
 			if info.Name() == ".git" {
 				fmt.Println("This is a github repository")
 
-				/**Given that I have a github repo in a directory
-				then I can list all the local branches of the repo. **/
-
 				/**only list branches that are not checked out**/
 
 				// We instance a new repository targeting the given path (the .git folder)
@@ -46,21 +43,40 @@ func main() {
 					return err
 				}
 
+				// // Get the working directory for the repository
+				// w, err := repo.Worktree()
+				//
+				// //print the status of the current Repository
+				// w.Status()
+
 				//retrieve all references to branches
 				localBr, _ := repo.Branches()
 
-				/**from localBr, check which one is a checkedout branch **/
+				/**from localBr, check if master, if not then delete **/
 
 				//for each localBr reference print their name and check if it's a branch
 				localBr.ForEach(func(ref *plumbing.Reference) error {
 					refName := ref.Name() //returns a ReferenceName string type
-					fmt.Println("Reference name is:", refName)
+					fmt.Println("Reference name:", refName)
 
-					//check if this is a branch
-					if refName.IsBranch() {
-						fmt.Println("It's a branch")
+					// //check if this is a branch
+					// if refName.IsBranch() {
+					// 	fmt.Println("It's a branch")
+					// }
+					if refName != "refs/heads/master" {
+						fmt.Println("This is not the master branch")
+						//DELETE
+						//create new Hash from reference
+						hashForRefHash := ref.Hash()
+						NewHashReference(refName, hashForRefHash)
+
+						//convert ref
+
+						err := repo.DeleteBranch(refName)
+						//
+					} else {
+						fmt.Println("THIS IS THE MASTER BRANCH")
 					}
-					//check if refName. is currently a checked out branch
 
 					return nil
 				})
