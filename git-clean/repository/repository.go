@@ -50,30 +50,21 @@ func GetLocalBranches(dir string) interface{} {
 
 func DeleteLocalBranches(branches interface{}) {
 
-	localBr := branches.(storer.ReferenceIter)
 	//convert branches to storer.ReferenceIter object
-	//localBr := storer.NewReferenceSliceIter(branches)
-	//
+	localBr := branches.(storer.ReferenceIter)
 
 	localBr.ForEach(func(ref *plumbing.Reference) error {
 		refName := ref.Name()
 		//
 		switch refName.IsBranch() {
 		case refName != "refs/heads/master":
-			fmt.Println("This is not the master branch")
+			fmt.Printf("Branch:%s \n", refName)
+
 		default:
 			fmt.Println("This is the master branch")
+			fmt.Printf("Branch:%s \n", refName)
 		}
 		return nil
 	})
-	//
-	// 	// 	//if a branch, check if it's not master
-	// 	// 	if refName != "refs/heads/master" {
-	// 	// 		fmt.Println("This is not the master branch")
-	// 	// 		//DELETE
-	// 	// 	}
-	// 	// 	return nil
-	// 	// })
-	// 	// return err
-	//
+
 }

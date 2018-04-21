@@ -16,9 +16,6 @@ func main() {
 
 	dir := rep.CheckRepository()
 	branches := rep.GetLocalBranches(dir)
-
-	//fmt.Printf("Branches %v", branches)
-
 	rep.DeleteLocalBranches(branches)
 
 }
